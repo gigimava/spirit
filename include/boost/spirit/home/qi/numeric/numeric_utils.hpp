@@ -63,7 +63,7 @@ namespace boost { namespace spirit { namespace qi
               , Radix
               , MinDigits
               , MaxDigits
-              , detail::positive_accumulator<Radix>
+              , detail::positive_accumulator<T, Radix>
               , Accumulate>
             extract_type;
 
@@ -113,7 +113,7 @@ namespace boost { namespace spirit { namespace qi
             extract_pos_type;
 
             typedef detail::extract_int<
-                T, Radix, MinDigits, MaxDigits, detail::negative_accumulator<Radix> >
+                T, Radix, MinDigits, MaxDigits, detail::negative_accumulator<T, Radix> >
             extract_neg_type;
 
             Iterator save = first;

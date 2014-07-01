@@ -116,7 +116,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     //  extracting integers. Use positive_accumulator if number is positive.
     //  Use negative_accumulator if number is negative.
     ///////////////////////////////////////////////////////////////////////////
-    template <unsigned Radix>
+    template <typename RealType, unsigned Radix>
     struct positive_accumulator
     {
         template <typename T, typename Char>
@@ -130,7 +130,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked add
         {
             // Ensure n *= Radix will not overflow
-            static T const max = (std::numeric_limits<T>::max)();
+            static T const max = (std::numeric_limits<RealType>::max)();
             static T const val = max / Radix;
             if (n > val)
                 return false;
@@ -147,7 +147,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
     };
 
-    template <unsigned Radix>
+    template <typename RealType, unsigned Radix>
     struct negative_accumulator
     {
         template <typename T, typename Char>
@@ -161,7 +161,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked subtract
         {
             // Ensure n *= Radix will not underflow
-            static T const min = (std::numeric_limits<T>::min)();
+            static T const min = (std::numeric_limits<RealType>::min)();
             static T const val = (min + 1) / T(Radix);
             if (n < val)
                 return false;
@@ -275,7 +275,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
     template <
         typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
-      , typename Accumulator = positive_accumulator<Radix>
+      , typename Accumulator = positive_accumulator<T, Radix>
       , bool Accumulate = false
     >
     struct extract_int

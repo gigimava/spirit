@@ -191,7 +191,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             static std::size_t const
                 overflow_free = digits_traits<T, Radix>::value - 1;
 
-            if (count < overflow_free)
+            if (0 < count && count < overflow_free)
             {
                 Accumulator::add(n, ch, mpl::false_());
             }

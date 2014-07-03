@@ -58,6 +58,8 @@ struct custom_uint
         { return custom_uint(a.n * b.n); }
     friend custom_uint operator+(custom_uint a, custom_uint b)
         { return custom_uint(a.n + b.n); }
+		friend custom_uint operator-(custom_uint a, custom_uint b)
+				{ return custom_uint(a.n - b.n); }
 };
 
 #endif
